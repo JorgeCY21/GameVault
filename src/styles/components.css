@@ -4,6 +4,7 @@
 .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.25rem 1rem; }
 .brand { color: #fff; font-size: 1.05rem; font-weight: 900; letter-spacing: .08em; text-decoration: none; }
 .brand span { color: #b782ff; }
+.brand { display: inline-flex; align-items: center; gap: .6rem; }.brand > span { color: #fff; }.brand > span > span { color: #b782ff; }.brand-logo { width: 2rem; height: 2rem; filter: drop-shadow(0 .3rem .45rem rgb(0 0 0 / .2)); }
 .header-status { color: #aeadba; font-size: .75rem; }
 .app-content { width: min(100%, 72rem); margin: 0 auto; }
 .view { padding: clamp(1.5rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem); }

@@ -14,5 +14,5 @@ export function renderSidebar(currentPath) {
     return `<a href="${href}"${isCurrent ? ' aria-current="page"' : ''}>${icon(iconName)}${label}</a>`
   }).join('')
 
-  return `<aside class="sidebar"><a class="brand" href="#/" aria-label="GameVault, ir a inicio">GAME<span>VAULT</span></a><p class="sidebar-caption">TU BIBLIOTECA PERSONAL</p><nav aria-label="Navegación principal">${links}</nav><div class="sidebar-footer"></div></aside>`
+  return `<aside class="sidebar"><a class="brand" href="#/" aria-label="GameVault, ir a inicio"><img class="brand-logo" src="/gamevault-logo.svg" alt=""><span>GAME<span>VAULT</span></span></a><p class="sidebar-caption">TU BIBLIOTECA PERSONAL</p><nav aria-label="Navegación principal">${links}</nav><div class="sidebar-footer"></div></aside>`
 }

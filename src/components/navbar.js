@@ -15,7 +15,7 @@ function createLinks(links, currentPath) {
 }
 
 export function renderMobileHeader() {
-  return `<header class="mobile-header"><a class="brand" href="#/" aria-label="GameVault, ir a inicio">GAME<span>VAULT</span></a><span class="header-status">Mi colección</span></header>`
+  return `<header class="mobile-header"><a class="brand" href="#/" aria-label="GameVault, ir a inicio"><img class="brand-logo" src="/gamevault-logo.svg" alt=""><span>GAME<span>VAULT</span></span></a><span class="header-status">Mi colección</span></header>`
 }
 
 export function renderBottomNavbar(currentPath) {
