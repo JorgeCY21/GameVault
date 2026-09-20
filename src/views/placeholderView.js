@@ -10,5 +10,6 @@ const viewDetails = {
 
 export function renderPlaceholderView(viewName) {
   const view = viewDetails[viewName]
-  return `<section class="view" aria-labelledby="view-title"><p class="eyebrow">${view.eyebrow}</p><h1 id="view-title">${view.title}</h1><p class="view-description">${view.text}</p><div class="empty-state"><span class="empty-state-icon" aria-hidden="true">🎮</span><h2>Todo listo para empezar</h2><p>Esta vista ya forma parte de la navegación de GameVault.</p></div></section>`
+  return `<section class="view" aria-labelledby="view-title"><p class="eyebrow">${view.eyebrow}</p><h1 id="view-title">${view.title}</h1><p class="view-description">${view.text}</p><div class="empty-state"><span class="empty-state-icon">${icon('gamepad')}</span><h2>Todo listo para empezar</h2><p>Esta vista ya forma parte de la navegación de GameVault.</p></div></section>`
 }
+import { icon } from '../components/icons.js'

@@ -1,11 +1,12 @@
 import { getGameDetails, getGameScreenshots } from '../services/rawgApi.js'
 import { addGame, getGame } from '../js/storage.js'
+import { icon } from '../components/icons.js'
 
 const libraryStatuses = [
-  { value: 'wishlist', label: '❤️ Quiero jugar' },
-  { value: 'playing', label: '🎮 Jugando' },
-  { value: 'completed', label: '✅ Completado' },
-  { value: 'completed-100', label: '🏆 100%' },
+  { value: 'wishlist', label: 'Quiero jugar' },
+  { value: 'playing', label: 'Jugando' },
+  { value: 'completed', label: 'Completado' },
+  { value: 'completed-100', label: '100%' },
 ]
 
 function escapeHtml(value = '') {
@@ -33,7 +34,7 @@ function renderTags(items, property = 'name') {
 function renderDetail(game, screenshots, savedGame) {
   const hero = game.background_image
     ? `<img src="${escapeHtml(game.background_image)}" alt="Portada de ${escapeHtml(game.name)}">`
-    : '<div class="detail-image-fallback" aria-hidden="true">🎮</div>'
+    : `<div class="detail-image-fallback">${icon('gamepad')}</div>`
   const statusButtons = libraryStatuses.map(({ value, label }) => `<button type="button" class="status-button${savedGame?.status === value ? ' is-selected' : ''}" data-status="${value}"${savedGame ? ' disabled' : ''}>${label}</button>`).join('')
   const screenshotMarkup = screenshots.length
     ? `<div class="screenshot-grid">${screenshots.map((shot) => `<img src="${escapeHtml(shot.image)}" alt="Captura de ${escapeHtml(game.name)}" loading="lazy">`).join('')}</div>`
@@ -42,7 +43,7 @@ function renderDetail(game, screenshots, savedGame) {
   const libraryMessage = savedGame
     ? `Este juego ya está en tu biblioteca como “${libraryStatuses.find((item) => item.value === savedGame.status).label}”.`
     : 'Selecciona el estado inicial para este videojuego.'
-  return `<section class="view detail-view" aria-labelledby="game-title"><a class="back-link" href="#/explore">← Volver a explorar</a><div class="detail-hero"><div class="detail-cover">${hero}</div><div class="detail-summary"><p class="eyebrow">VIDEOJUEGO</p><h1 id="game-title">${escapeHtml(game.name)}</h1><div class="detail-ratings"><span>★ ${Number(game.rating || 0).toFixed(1)} / 5</span>${game.metacritic ? `<span class="metacritic-badge">Metacritic ${game.metacritic}</span>` : ''}</div><p class="detail-description">${escapeHtml(cleanDescription(game.description_raw || game.description))}</p></div></div><section class="detail-section"><h2>Añadir a GameVault</h2><p>${libraryMessage}</p><div class="status-buttons">${statusButtons}</div><p class="status-feedback" id="status-feedback" aria-live="polite"></p></section><section class="detail-section detail-info"><div><h2>Fecha de lanzamiento</h2><p>${formatDate(game.released)}</p></div><div><h2>Géneros</h2><div class="detail-tags">${renderTags(game.genres)}</div></div><div><h2>Plataformas</h2><div class="detail-tags">${renderTags(game.platforms?.map(({ platform }) => platform))}</div></div></section><section class="detail-section"><h2>Capturas</h2>${screenshotMarkup}</section><p class="rawg-attribution">Datos e imágenes de videojuegos por <a href="https://rawg.io/" target="_blank" rel="noreferrer">RAWG</a>.</p></section>`
+  return `<section class="view detail-view" aria-labelledby="game-title"><a class="back-link" href="#/explore">← Volver a explorar</a><div class="detail-hero"><div class="detail-cover">${hero}</div><div class="detail-summary"><p class="eyebrow">VIDEOJUEGO</p><h1 id="game-title">${escapeHtml(game.name)}</h1><div class="detail-ratings"><span class="rating-value">${icon('star')} ${Number(game.rating || 0).toFixed(1)} / 5</span>${game.metacritic ? `<span class="metacritic-badge">Metacritic ${game.metacritic}</span>` : ''}</div><p class="detail-description">${escapeHtml(cleanDescription(game.description_raw || game.description))}</p></div></div><section class="detail-section"><h2>Añadir a GameVault</h2><p>${libraryMessage}</p><div class="status-buttons">${statusButtons}</div><p class="status-feedback" id="status-feedback" aria-live="polite"></p></section><section class="detail-section detail-info"><div><h2>Fecha de lanzamiento</h2><p>${formatDate(game.released)}</p></div><div><h2>Géneros</h2><div class="detail-tags">${renderTags(game.genres)}</div></div><div><h2>Plataformas</h2><div class="detail-tags">${renderTags(game.platforms?.map(({ platform }) => platform))}</div></div></section><section class="detail-section"><h2>Capturas</h2>${screenshotMarkup}</section><p class="rawg-attribution">Datos e imágenes de videojuegos por <a href="https://rawg.io/" target="_blank" rel="noreferrer">RAWG</a>.</p></section>`
 }
 
 function renderDetailMessage(container, title, text, retry = false) {

@@ -13,7 +13,8 @@ export function renderGameCard(game) {
   const genres = (game.genres || []).slice(0, 2).map((genre) => escapeHtml(genre.name)).join(' · ') || 'Sin género'
   const image = game.background_image
     ? `<img src="${escapeHtml(game.background_image)}" alt="Portada de ${escapeHtml(game.name)}" loading="lazy">`
-    : '<div class="game-card-image game-card-fallback" aria-hidden="true">🎮</div>'
+    : `<div class="game-card-image game-card-fallback">${icon('gamepad')}</div>`
 
-  return `<a class="game-card" href="#/game/${game.id}"><div class="game-card-image">${image}</div><div class="game-card-content"><p class="game-card-genres">${genres}</p><h3>${escapeHtml(game.name)}</h3><div class="game-card-meta"><span>${formatDate(game.released)}</span><span>★ ${Number(game.rating || 0).toFixed(1)}</span></div></div></a>`
+  return `<a class="game-card" href="#/game/${game.id}"><div class="game-card-image">${image}</div><div class="game-card-content"><p class="game-card-genres">${genres}</p><h3>${escapeHtml(game.name)}</h3><div class="game-card-meta"><span>${formatDate(game.released)}</span><span class="rating-value">${icon('star')} ${Number(game.rating || 0).toFixed(1)}</span></div></div></a>`
 }
+import { icon } from './icons.js'

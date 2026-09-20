@@ -4,6 +4,8 @@
   color: #f6f5ff;
   background: #0d0d13;
   font-synthesis: none;
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --accent: #b782ff;
 }
 
 * { box-sizing: border-box; }
@@ -14,4 +16,7 @@ body { min-width: 320px; min-height: 100vh; margin: 0; background: #0d0d13; }
 
 a { color: inherit; }
 button, input, textarea, select { font: inherit; }
+button, a, input, textarea, select { transition: color .2s var(--ease-out), background-color .2s var(--ease-out), border-color .2s var(--ease-out), box-shadow .2s var(--ease-out), transform .2s var(--ease-out); }
+button:active { transform: scale(.98); }
+::selection { color: #fff; background: #6f48a2; }
 :focus-visible { outline: 3px solid #ba8cff; outline-offset: 3px; }

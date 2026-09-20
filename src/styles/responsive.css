@@ -22,8 +22,18 @@
   .screenshot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .profile-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .home-summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .continue-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .continue-card { grid-template-columns: 1fr; }
+  .continue-image { min-height: auto; aspect-ratio: 16 / 9; }
 }
 
 @media (min-width: 1180px) {
   .game-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }

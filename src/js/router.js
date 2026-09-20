@@ -5,6 +5,8 @@ import { activateGameDetailView, renderGameDetailView } from '../views/gameDetai
 import { activateLibraryView, renderLibraryView } from '../views/library.js'
 import { activateProgressView, renderProgressView } from '../views/progress.js'
 import { activateAchievementsView, renderAchievementsView } from '../views/achievements.js'
+import { renderProfileView } from '../views/profile.js'
+import { renderHomeView } from '../views/home.js'
 import { renderPlaceholderView } from '../views/placeholderView.js'
 
 const routes = {
@@ -31,7 +33,9 @@ function getRouteId() {
 function renderApp(root) {
   const route = getRoute()
   const viewName = routes[route]
-  const view = viewName === 'explore'
+  const view = viewName === 'home'
+    ? renderHomeView()
+    : viewName === 'explore'
     ? renderExploreView()
     : viewName === 'game'
       ? renderGameDetailView()
@@ -41,7 +45,9 @@ function renderApp(root) {
           ? renderProgressView()
           : viewName === 'achievements'
             ? renderAchievementsView()
-        : renderPlaceholderView(viewName)
+            : viewName === 'profile'
+              ? renderProfileView()
+              : renderPlaceholderView(viewName)
 
   root.innerHTML = `<div class="app-shell">${renderSidebar(route)}<div class="main-area">${renderMobileHeader()}<main class="app-content">${view}</main>${renderBottomNavbar(route)}</div></div>`
 

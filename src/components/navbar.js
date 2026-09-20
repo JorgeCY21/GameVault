@@ -1,14 +1,16 @@
+import { icon } from './icons.js'
+
 const mobileLinks = [
-  { href: '#/', label: 'Inicio', icon: '⌂' },
-  { href: '#/explore', label: 'Explorar', icon: '⌕' },
-  { href: '#/library', label: 'Biblioteca', icon: '◈' },
-  { href: '#/profile', label: 'Perfil', icon: '◉' },
+  { href: '#/', label: 'Inicio', icon: 'home' },
+  { href: '#/explore', label: 'Explorar', icon: 'search' },
+  { href: '#/library', label: 'Biblioteca', icon: 'library' },
+  { href: '#/profile', label: 'Perfil', icon: 'user' },
 ]
 
 function createLinks(links, currentPath) {
-  return links.map(({ href, label, icon }) => {
+  return links.map(({ href, label, icon: iconName }) => {
     const isCurrent = href === `#${currentPath}`
-    return `<a href="${href}"${isCurrent ? ' aria-current="page"' : ''}><span aria-hidden="true">${icon}</span><span>${label}</span></a>`
+    return `<a href="${href}"${isCurrent ? ' aria-current="page"' : ''}>${icon(iconName)}<span>${label}</span></a>`
   }).join('')
 }
 

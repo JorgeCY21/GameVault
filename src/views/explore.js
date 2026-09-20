@@ -18,10 +18,12 @@ export function renderExploreView() {
 }
 
 function renderMessage(container, type, title, text, showRetry = false) {
+  container.setAttribute('aria-busy', type === 'loading' ? 'true' : 'false')
   container.innerHTML = `<div class="result-message ${type}"><span aria-hidden="true">${type === 'loading' ? '◌' : '!'}</span><div><h3>${title}</h3><p>${text}</p>${showRetry ? '<button type="button" class="text-button" data-retry>Reintentar</button>' : ''}</div></div>`
 }
 
 function renderGames(container, games) {
+  container.setAttribute('aria-busy', 'false')
   if (!games.length) {
     renderMessage(container, 'empty', 'Sin resultados', 'Prueba con otro nombre o elige una categoría diferente.')
     return
