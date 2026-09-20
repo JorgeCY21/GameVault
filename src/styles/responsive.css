@@ -15,6 +15,11 @@
   .view { min-height: 100vh; padding-top: clamp(5rem, 12vh, 9rem); }
   .explore-view { padding-top: clamp(3rem, 7vh, 5rem); }
   .game-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .detail-view { padding-top: clamp(3rem, 7vh, 5rem); }
+  .detail-hero { grid-template-columns: minmax(18rem, .8fr) minmax(0, 1fr); align-items: center; }
+  .detail-cover { aspect-ratio: 4 / 5; }
+  .detail-info { grid-template-columns: .8fr 1fr 1.5fr; }
+  .screenshot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (min-width: 1180px) {

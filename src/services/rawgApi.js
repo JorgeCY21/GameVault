@@ -36,5 +36,10 @@ export async function getGamesByGenre(genre) {
 }
 
 export async function getGameDetails(gameId) {
-  return request(`/games/${gameId}`)
+  return request(`/games/${encodeURIComponent(gameId)}`)
+}
+
+export async function getGameScreenshots(gameId) {
+  const data = await request(`/games/${encodeURIComponent(gameId)}/screenshots`, { page_size: 6 })
+  return data.results || []
 }
