@@ -11,5 +11,5 @@ export function activateAchievementsView(root) {
   const summary = getAchievementSummary()
   const achievements = getAchievements()
 
-  container.innerHTML = `<section class="view achievements-view" aria-labelledby="view-title"><p class="eyebrow">VISTA 06</p><h1 id="view-title">Logros</h1><p class="view-description">Tus logros se desbloquean automáticamente con la actividad de tu biblioteca.</p><div class="achievement-summary">${icon('trophy')}<div><strong>${summary.unlocked} de ${summary.total}</strong><p>logros desbloqueados</p></div></div><div class="achievement-list">${achievements.map(renderAchievementCard).join('')}</div></section>`
+  container.innerHTML = `<section class="view achievements-view" aria-labelledby="view-title"><h1 id="view-title">Logros</h1><p class="view-description">Tus logros se desbloquean automáticamente con la actividad de tu biblioteca.</p><div class="achievement-summary">${icon('trophy')}<div><strong>${summary.unlocked} de ${summary.total}</strong><p>logros desbloqueados</p></div></div><div class="achievement-list">${achievements.map(renderAchievementCard).join('')}</div></section>`
 }

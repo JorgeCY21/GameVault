@@ -12,7 +12,7 @@ const filters = [
 
 export function renderLibraryView() {
   const filterButtons = filters.map(({ value, label }) => `<button type="button" class="library-filter${value === 'all' ? ' is-active' : ''}" data-filter="${value}" aria-pressed="${value === 'all'}">${label}</button>`).join('')
-  return `<section class="view library-view" aria-labelledby="view-title"><p class="eyebrow">VISTA 04</p><h1 id="view-title">Mi biblioteca</h1><p class="view-description">Gestiona tus videojuegos, su estado y el avance de cada partida.</p><label class="sr-only" for="library-search">Buscar en mi biblioteca</label><input id="library-search" class="library-search" type="search" placeholder="Buscar en mi biblioteca..." autocomplete="off"><div class="library-filters" aria-label="Filtrar biblioteca">${filterButtons}</div><p class="library-count" id="library-count" aria-live="polite"></p><div class="library-grid" id="library-results"></div></section>`
+  return `<section class="view library-view" aria-labelledby="view-title"><h1 id="view-title">Mi biblioteca</h1><p class="view-description">Gestiona tus videojuegos, su estado y el avance de cada partida.</p><label class="sr-only" for="library-search">Buscar en mi biblioteca</label><input id="library-search" class="library-search" type="search" placeholder="Buscar en mi biblioteca..." autocomplete="off"><div class="library-filters" aria-label="Filtrar biblioteca">${filterButtons}</div><p class="library-count" id="library-count" aria-live="polite"></p><div class="library-grid" id="library-results"></div></section>`
 }
 
 export function activateLibraryView(root) {
