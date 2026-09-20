@@ -148,3 +148,7 @@ GameVault muestra una atribución y enlace activo a RAWG en las vistas que utili
 - [MDN — Window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 - [MDN — Using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using)
 - [RAWG Video Games Database API](https://api.rawg.io/docs/)
+
+## Material para informe
+
+El guion de exposición, la arquitectura, las conclusiones propuestas y la lista de capturas se encuentran en [docs/MATERIAL_INFORME.md](docs/MATERIAL_INFORME.md).
