@@ -20,6 +20,8 @@
   .detail-cover { aspect-ratio: 4 / 5; }
   .detail-info { grid-template-columns: .8fr 1fr 1.5fr; }
   .screenshot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (min-width: 1180px) {

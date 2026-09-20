@@ -1,4 +1,5 @@
 import { getGameDetails, getGameScreenshots } from '../services/rawgApi.js'
+import { addGame, getGame } from '../js/storage.js'
 
 const libraryStatuses = [
   { value: 'wishlist', label: '❤️ Quiero jugar' },
@@ -29,16 +30,19 @@ function renderTags(items, property = 'name') {
   return items.map((item) => `<span class="detail-tag">${escapeHtml(item[property])}</span>`).join('')
 }
 
-function renderDetail(game, screenshots) {
+function renderDetail(game, screenshots, savedGame) {
   const hero = game.background_image
     ? `<img src="${escapeHtml(game.background_image)}" alt="Portada de ${escapeHtml(game.name)}">`
     : '<div class="detail-image-fallback" aria-hidden="true">🎮</div>'
-  const statusButtons = libraryStatuses.map(({ value, label }) => `<button type="button" class="status-button" data-status="${value}">${label}</button>`).join('')
+  const statusButtons = libraryStatuses.map(({ value, label }) => `<button type="button" class="status-button${savedGame?.status === value ? ' is-selected' : ''}" data-status="${value}"${savedGame ? ' disabled' : ''}>${label}</button>`).join('')
   const screenshotMarkup = screenshots.length
     ? `<div class="screenshot-grid">${screenshots.map((shot) => `<img src="${escapeHtml(shot.image)}" alt="Captura de ${escapeHtml(game.name)}" loading="lazy">`).join('')}</div>`
     : '<p class="detail-empty">No hay capturas disponibles para este videojuego.</p>'
 
-  return `<section class="view detail-view" aria-labelledby="game-title"><a class="back-link" href="#/explore">← Volver a explorar</a><div class="detail-hero"><div class="detail-cover">${hero}</div><div class="detail-summary"><p class="eyebrow">VIDEOJUEGO</p><h1 id="game-title">${escapeHtml(game.name)}</h1><div class="detail-ratings"><span>★ ${Number(game.rating || 0).toFixed(1)} / 5</span>${game.metacritic ? `<span class="metacritic-badge">Metacritic ${game.metacritic}</span>` : ''}</div><p class="detail-description">${escapeHtml(cleanDescription(game.description_raw || game.description))}</p></div></div><section class="detail-section"><h2>Añadir a GameVault</h2><p>Selecciona el estado inicial para este videojuego.</p><div class="status-buttons">${statusButtons}</div><p class="status-feedback" id="status-feedback" aria-live="polite"></p></section><section class="detail-section detail-info"><div><h2>Fecha de lanzamiento</h2><p>${formatDate(game.released)}</p></div><div><h2>Géneros</h2><div class="detail-tags">${renderTags(game.genres)}</div></div><div><h2>Plataformas</h2><div class="detail-tags">${renderTags(game.platforms?.map(({ platform }) => platform))}</div></div></section><section class="detail-section"><h2>Capturas</h2>${screenshotMarkup}</section><p class="rawg-attribution">Datos e imágenes de videojuegos por <a href="https://rawg.io/" target="_blank" rel="noreferrer">RAWG</a>.</p></section>`
+  const libraryMessage = savedGame
+    ? `Este juego ya está en tu biblioteca como “${libraryStatuses.find((item) => item.value === savedGame.status).label}”.`
+    : 'Selecciona el estado inicial para este videojuego.'
+  return `<section class="view detail-view" aria-labelledby="game-title"><a class="back-link" href="#/explore">← Volver a explorar</a><div class="detail-hero"><div class="detail-cover">${hero}</div><div class="detail-summary"><p class="eyebrow">VIDEOJUEGO</p><h1 id="game-title">${escapeHtml(game.name)}</h1><div class="detail-ratings"><span>★ ${Number(game.rating || 0).toFixed(1)} / 5</span>${game.metacritic ? `<span class="metacritic-badge">Metacritic ${game.metacritic}</span>` : ''}</div><p class="detail-description">${escapeHtml(cleanDescription(game.description_raw || game.description))}</p></div></div><section class="detail-section"><h2>Añadir a GameVault</h2><p>${libraryMessage}</p><div class="status-buttons">${statusButtons}</div><p class="status-feedback" id="status-feedback" aria-live="polite"></p></section><section class="detail-section detail-info"><div><h2>Fecha de lanzamiento</h2><p>${formatDate(game.released)}</p></div><div><h2>Géneros</h2><div class="detail-tags">${renderTags(game.genres)}</div></div><div><h2>Plataformas</h2><div class="detail-tags">${renderTags(game.platforms?.map(({ platform }) => platform))}</div></div></section><section class="detail-section"><h2>Capturas</h2>${screenshotMarkup}</section><p class="rawg-attribution">Datos e imágenes de videojuegos por <a href="https://rawg.io/" target="_blank" rel="noreferrer">RAWG</a>.</p></section>`
 }
 
 function renderDetailMessage(container, title, text, retry = false) {
@@ -51,6 +55,7 @@ export function renderGameDetailView() {
 
 export function activateGameDetailView(root, gameId) {
   const container = root.querySelector('#game-detail')
+  let currentGame = null
 
   async function loadGame() {
     if (!gameId) {
@@ -65,7 +70,8 @@ export function activateGameDetailView(root, gameId) {
         getGameDetails(gameId),
         getGameScreenshots(gameId).catch(() => []),
       ])
-      container.innerHTML = renderDetail(game, screenshots.length ? screenshots : (game.short_screenshots || []))
+      currentGame = game
+      container.innerHTML = renderDetail(game, screenshots.length ? screenshots : (game.short_screenshots || []), getGame(gameId))
     } catch (error) {
       const text = error.message === 'API_KEY_MISSING'
         ? 'Configura VITE_RAWG_API_KEY en tu archivo .env y reinicia Vite.'
@@ -77,8 +83,14 @@ export function activateGameDetailView(root, gameId) {
   container.addEventListener('click', (event) => {
     const statusButton = event.target.closest('[data-status]')
     if (statusButton) {
-      container.querySelectorAll('[data-status]').forEach((button) => button.classList.toggle('is-selected', button === statusButton))
-      container.querySelector('#status-feedback').textContent = 'Estado seleccionado. Se guardará en tu biblioteca durante la Fase 5.'
+      const result = addGame(currentGame, statusButton.dataset.status)
+      if (result.added) {
+        container.querySelectorAll('[data-status]').forEach((button) => {
+          button.disabled = true
+          button.classList.toggle('is-selected', button === statusButton)
+        })
+        container.querySelector('#status-feedback').textContent = 'Juego añadido a tu biblioteca correctamente.'
+      }
     }
     if (event.target.matches('[data-retry-detail]')) loadGame()
   })
