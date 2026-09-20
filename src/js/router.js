@@ -1,5 +1,6 @@
 import { renderBottomNavbar, renderMobileHeader } from '../components/navbar.js'
 import { renderSidebar } from '../components/sidebar.js'
+import { activateExploreView, renderExploreView } from '../views/explore.js'
 import { renderPlaceholderView } from '../views/placeholderView.js'
 
 const routes = {
@@ -21,7 +22,14 @@ function getRoute() {
 
 function renderApp(root) {
   const route = getRoute()
-  root.innerHTML = `<div class="app-shell">${renderSidebar(route)}<div class="main-area">${renderMobileHeader()}<main class="app-content">${renderPlaceholderView(routes[route])}</main>${renderBottomNavbar(route)}</div></div>`
+  const viewName = routes[route]
+  const view = viewName === 'explore' ? renderExploreView() : renderPlaceholderView(viewName)
+
+  root.innerHTML = `<div class="app-shell">${renderSidebar(route)}<div class="main-area">${renderMobileHeader()}<main class="app-content">${view}</main>${renderBottomNavbar(route)}</div></div>`
+
+  if (viewName === 'explore') {
+    activateExploreView(root)
+  }
 }
 
 export function startRouter(root) {

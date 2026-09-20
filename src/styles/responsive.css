@@ -13,4 +13,10 @@
   .main-area { padding-bottom: 0; }
   .mobile-header, .bottom-nav { display: none; }
   .view { min-height: 100vh; padding-top: clamp(5rem, 12vh, 9rem); }
+  .explore-view { padding-top: clamp(3rem, 7vh, 5rem); }
+  .game-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+}
+
+@media (min-width: 1180px) {
+  .game-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
