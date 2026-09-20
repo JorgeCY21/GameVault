@@ -1,0 +1,11 @@
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem clamp(1.25rem, 4vw, 4rem); border-bottom: 1px solid #2a2a38; }
+.brand { color: #fff; font-weight: 900; letter-spacing: .08em; text-decoration: none; }
+.brand span { color: #a970ff; }
+.main-nav { display: flex; gap: .25rem; }
+.main-nav a { padding: .55rem .7rem; border-radius: .5rem; color: #b8b8c7; font-size: .9rem; text-decoration: none; }
+.main-nav a:hover, .main-nav a[aria-current="page"] { color: #fff; background: #2a2340; }
+.welcome-panel { max-width: 720px; padding: clamp(2rem, 8vw, 5rem) clamp(1.25rem, 4vw, 4rem); }
+.eyebrow { margin: 0; color: #a970ff; font-size: .8rem; font-weight: 700; letter-spacing: .12em; }
+.welcome-panel h1 { margin: .5rem 0 1rem; font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.1; }
+.welcome-panel p { color: #c4c4d0; font-size: 1.05rem; line-height: 1.6; }
+.phase-note { margin-top: 2rem; padding: 1rem; border-left: 3px solid #a970ff; background: #1b1829; }
